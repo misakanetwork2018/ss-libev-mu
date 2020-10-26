@@ -2,13 +2,12 @@ package ss_manager
 
 import (
 	"fmt"
-	"strconv"
 )
 
-func Remove(port int) (bool, error) {
+func Remove(port string) (bool, error) {
 	var recv string
 
-	err := send("remove: {\"server_port\": " + strconv.Itoa(port) + "}")
+	err := send("remove: {\"server_port\": " + port + "}")
 
 	if err != nil {
 		fmt.Println(err.Error())

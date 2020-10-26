@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"ss-libev-mu/ss_manager"
 	"ss-libev-mu/utils"
-	"strconv"
 )
 
 func DelUser() func(c *gin.Context) {
@@ -15,15 +14,13 @@ func DelUser() func(c *gin.Context) {
 			stat int
 		)
 
-		portString := c.PostForm("port")
-
-		port, _ := strconv.Atoi(portString)
+		port := c.PostForm("port")
 
 		// get last traffic info before delete
 		stats, err := utils.GetStats()
 
 		if err == nil {
-			stat = stats[portString]
+			stat = stats[port]
 
 			ok, err = ss_manager.Remove(port)
 
