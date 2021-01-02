@@ -8,19 +8,16 @@ import (
 func Reboot() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		err, okS, errS := utils.Shell("systemctl restart ss-manager")
-		var success = false
-		var msg string
 		if err == nil {
-			msg = okS
-			success = true
+			c.JSON(200, gin.H{
+				"success": true,
+				"msg":     okS,
+			})
 		} else {
-			msg = errS
-			success = false
+			respondWithError(500, errS, c)
+			return
 		}
-		c.JSON(200, gin.H{
-			"success": success,
-			"msg":     msg,
-		})
+
 		_, _, _ = utils.Shell("systemctl restart ss-libev-mu")
 	}
 }
