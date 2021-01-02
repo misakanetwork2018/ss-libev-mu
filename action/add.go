@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"ss-libev-mu/model"
 	"ss-libev-mu/ss_manager"
+	"strconv"
 )
 
 func AddUser() func(c *gin.Context) {
@@ -22,6 +23,11 @@ func AddUser() func(c *gin.Context) {
 
 		if err != nil {
 			msg = err.Error()
+		}
+
+		if ok {
+			// set port value to 0
+			OldTraffic[strconv.Itoa(user.ServerPort)] = 0
 		}
 
 		c.JSON(200, gin.H{

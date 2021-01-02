@@ -22,6 +22,10 @@ func DelUser() func(c *gin.Context) {
 		if err == nil {
 			stat = stats[port]
 
+			if oldTraffic, ok := OldTraffic[port]; ok && stat >= oldTraffic {
+				stat = stat - oldTraffic
+			}
+
 			ok, err = ss_manager.Remove(port)
 
 			if err != nil {
@@ -29,6 +33,11 @@ func DelUser() func(c *gin.Context) {
 			}
 		} else {
 			msg = err.Error()
+		}
+
+		if ok {
+			// delete traffic info
+			delete(OldTraffic, port)
 		}
 
 		c.JSON(200, gin.H{

@@ -7,7 +7,7 @@ import (
 
 func Reboot() func(c *gin.Context) {
 	return func(c *gin.Context) {
-		err, okS, errS := utils.Shell("systemctl restart ss-manager")
+		err, okS, errS := utils.Shell("systemctl restart shadowsocks")
 		if err == nil {
 			c.JSON(200, gin.H{
 				"success": true,
@@ -18,6 +18,6 @@ func Reboot() func(c *gin.Context) {
 			return
 		}
 
-		_, _, _ = utils.Shell("systemctl restart ss-libev-mu")
+		_, _, _ = utils.Shell("systemctl restart shadowsocks-mu")
 	}
 }
