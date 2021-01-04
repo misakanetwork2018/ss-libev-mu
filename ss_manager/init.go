@@ -9,11 +9,11 @@ import (
 func Init(managerAddress string, bindAddress string) {
 	var err error
 
-	err = os.Remove(bindAddress)
-
-	if err != nil {
-		fmt.Println("delete sock failed: ", err.Error())
-		return
+	if _, err = os.Stat(bindAddress); err == nil {
+		if err = os.Remove(bindAddress); err != nil {
+			fmt.Println("delete sock failed: ", err.Error())
+			return
+		}
 	}
 
 	rUnixAddr, _ := net.ResolveUnixAddr("unixgram", managerAddress)
