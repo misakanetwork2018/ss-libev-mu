@@ -2,7 +2,7 @@ package action
 
 import (
 	"github.com/gin-gonic/gin"
-	"v2ray-api/utils"
+	"ss-libev-mu/utils"
 )
 
 func Reboot() func(c *gin.Context) {
